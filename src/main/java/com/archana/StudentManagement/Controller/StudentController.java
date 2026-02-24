@@ -63,19 +63,7 @@ public class StudentController{
         return ResponseEntity.ok(results);
     }
     
-    //edit
- // Edit Student API
- // Edit Student API
-    @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) {
-        try {
-            Student updatedStudent = studentService.updateStudent(id, studentDetails);
-            return ResponseEntity.ok(updatedStudent);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-  
+ 
 
  
 	
