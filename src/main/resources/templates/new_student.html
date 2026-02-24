@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Student Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --orange-main: #ff8c00;
+            --dark-bg: #121212;
+            --card-bg: #000000;
+            --input-bg: #1e1e1e;
+        }
+        body { background-color: var(--dark-bg); color: #ffffff; font-family: 'Inter', sans-serif; }
+        .card { background-color: var(--card-bg); border: 2px solid var(--orange-main); border-radius: 15px; }
+        
+        /* High Visibility Labels */
+        .form-label { 
+            color: var(--orange-main) !important; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select { 
+            background-color: var(--input-bg); border: 1px solid #333; color: white; padding: 12px; 
+        }
+        .form-control:focus, .form-select:focus { 
+            background-color: #252525; border-color: var(--orange-main); color: white; box-shadow: 0 0 10px rgba(255, 140, 0, 0.4); 
+        }
+        
+        .btn-orange { background-color: var(--orange-main); color: #000; font-weight: 800; border: none; padding: 12px; transition: 0.3s; }
+        .btn-orange:hover { background-color: #e67e00; color: #fff; transform: translateY(-2px); }
+        
+        .custom-switch:checked { background-color: var(--orange-main) !important; border-color: var(--orange-main) !important; }
+        .cancel-link { color: #888; text-decoration: none; transition: 0.3s; }
+        .cancel-link:hover { color: var(--orange-main); }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="text-center text-white mb-4">STUDENT <span style="color: var(--orange-main);">REGISTRATION</span></h3>
+                        
+                        <form th:action="@{/students/saveStudent}" th:object="${student}" method="POST">
+                            
+                            <div class="mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" th:field="*{firstName}" class="form-control" placeholder="Enter first name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter last name" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Standard</label>
+                                    <select th:field="*{standard}" class="form-select">
+                                        <option value="Grade 10">Grade 10</option>
+                                        <option value="Grade 11">Grade 11</option>
+                                        <option value="Grade 12">Grade 12</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Gender</label>
+                                    <select th:field="*{gender}" class="form-select">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number</label>
+                                <input type="text" th:field="*{contactNumber}" class="form-control" placeholder="+91 XXXXX-XXXXX">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label d-block">Account Status</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input custom-switch" type="checkbox" th:field="*{active}" id="activeStatus">
+                                    <label class="form-check-label text-white-50 ms-2" for="activeStatus">Set as Active Student</label>
+                                </div>
+                            </div>
+							
+                            <button type="submit" class="btn btn-orange w-100 mb-3">SAVE STUDENT RECORD</button>
+                            
+                            <div class="text-center">
+                                <a th:href="@{/students/}" class="cancel-link small">Return to Directory</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
