@@ -25,20 +25,36 @@
             text-transform: uppercase;
         }
         .brand-orange { color: var(--orange-primary); }
+		
+       
+        /* Styling for the flat nav links */
+.nav-link { 
+    color: #888 !important; 
+    font-size: 0.95rem;
+    padding: 1.2rem 1rem !important;
+    font-weight: 500;
+    
+    transition: 0.3s;
+}
 
-        .nav-link { 
-            color: #888 !important; 
-            font-size: 0.95rem;
-            padding: 1.2rem 1rem !important;
-            font-weight: 500;
-            border-bottom: 2px solid transparent;
-        }
-        .nav-link.active { 
-            color: var(--orange-primary) !important; 
-            border-bottom-color: var(--orange-primary);
-        }
-        .nav-link:hover { color: #fff !important; }
+/* Ensure icons align with text */
+.nav-link i {
+    font-size: 1rem;
+    vertical-align: middle;
+}
 
+/* Orange underline for the active page */
+.nav-link.active { 
+    color: var(--orange-primary) !important; 
+    
+}
+
+
+
+.nav-link:hover { 
+    color: #fff !important; 
+}
+        
         /* Filter Row */
         .filter-container {
             background: var(--card-bg);
@@ -124,17 +140,24 @@
             </a>
             
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/students/}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Admin Activity</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Fee</a>
-                    </li>
-                </ul>
+      <ul class="navbar-nav ms-2">
+    <li class="nav-item">
+        <a class="nav-link active" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}" th:href="@{/students/}">Dashboard</a>
+    </li>
+    <li class="nav-item">                    
+    <a class="nav-link active" th:href="@{/students/new}">
+        <i class="bi bi-person-plus me-1"></i> Add Student
+    </a>
+</li>
+    
+   
+    <li class="nav-item">
+        <a class="nav-link active" th:classappend="${currentPage == 'fee' ? 'active' : ''}" href="#">
+            <i class="bi bi-credit-card me-1"></i> Fee
+        </a>
+    </li>
+</ul>
+               
             </div>
         </div>
     </nav>
@@ -144,41 +167,42 @@
             <form th:action="@{/students/filter}" method="get" class="row g-2 align-items-center">
                 <div class="col-md-3">
                     
-                    <input type="text" name="name" th:value="${name}" class="form-control filter-box" placeholder="Search Name">
+                    
+                    <input type="text" name="name" th:value="${savedName}" placeholder="Search Name" class="form-control">
                 </div>
                 <div class="col-md-2">
-                    <select name="standard" class="form-select filter-box">
-                        <option value="">Class</option>
-                        <option value="LKG">LKG</option>
-                        <option value="UKG">UKG</option>
-                        <option value="1st">1st</option>
-                        <option value="2nd">2nd</option>
-                        <option value="3rd">3rd</option>
-                        <option value="4th">4th</option>
-                        <option value="5th">5th</option>
-                        <option value="6th">6th</option>
-                        <option value="7th">7th</option>
-                        <option value="8th">8th</option>
-                        <option value="9th">9th</option>
-                        <option value="10th">10th</option>
-                        <option value="11th">11th</option>
-                        <option value="12th">12th</option>
-                        <option value="12th">Other</option>
-                        
-                    </select>
+                <select name="standard" class="form-select">
+   				 <option value="">Class</option>
+    			 <option value="LKG" th:selected="${savedStandard == 'LKG'}">LKG</option>
+   				 <option value="UKG" th:selected="${savedStandard == 'UKG'}">UKG</option>
+  				 <option value="I" th:selected="${savedStandard == 'I'}">I</option>
+  				 <option value="II" th:selected="${savedStandard == 'II'}">II</option>
+  				 <option value="III" th:selected="${savedStandard == 'III'}">III</option>
+  				 <option value="IV" th:selected="${savedStandard == 'IV'}">IV</option>
+  				 <option value="V" th:selected="${savedStandard == 'V'}">V</option>
+  				 <option value="VI" th:selected="${savedStandard == 'VI'}">VI</option>
+  				 <option value="VII" th:selected="${savedStandard == 'VII'}">VII</option>
+  				 <option value="VIII" th:selected="${savedStandard == 'VIII'}">VIII</option>
+  				 <option value="IX" th:selected="${savedStandard == 'IX'}">IX</option>
+  				 <option value="X" th:selected="${savedStandard == 'X'}">X</option>
+  				 <option value="XI" th:selected="${savedStandard == 'XI'}">XI</option>
+  				 <option value="XII" th:selected="${savedStandard == 'XII'}">XXI</option>
+  				 <option value="Other" th:selected="${savedStandard == 'Other'}">Other</option>
+				 </select>
+                   
                 </div>
                 <div class="col-md-2">
-                    <select name="gender" class="form-select filter-box">
+                    <select name="gender" class="form-select">
                         <option value="">Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                       <option value="Male" th:selected="${savedGender == 'Male'}">Male</option>
+                        <option value="Female" th:selected="${savedGender == 'Female'}">Female</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="active" class="form-select filter-box">
-    				<option value="">Status</option>
-   					 <option value="true" th:selected="${active == true}">Active</option>
-  						  <option value="false" th:selected="${active == false}">Inactive</option>
+                    <select name="active" class="form-select">
+    					<option value="">Status</option>
+    					<option value="true" th:selected="${savedActive == true}">Active</option>
+  						  <option value="false" th:selected="${savedActive == false}">Inactive</option>
 					</select>
                 </div>
                 <div class="col-md-3 text-end">

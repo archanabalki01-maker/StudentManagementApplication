@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.archana.StudentManagement.Entity.Student;
@@ -40,7 +42,33 @@ public class WebController {
         
         List<Student> filteredResults = studentService.getFilteredStudents(name, standard, gender, active);
         model.addAttribute("listStudents", filteredResults);
+     // Pass the search values back to the view
+        model.addAttribute("savedName", name);
+        model.addAttribute("savedStandard", standard);
+        model.addAttribute("savedGender", gender);
+        model.addAttribute("savedActive", active);
         return "index";
+    }
+    
+    @GetMapping("/new")
+    public String showNewStudentForm(Model model) {
+        // This creates the empty student object for the form to 'bind' to
+        model.addAttribute("student", new Student());
+        
+        // This tells your navbar to highlight the 'Add Student' tab in orange
+        model.addAttribute("currentPage", "add");
+        
+        // This MUST match your file name 'new_student.html' (without the .html)
+        return "new_student"; 
+    }
+
+    @PostMapping("/saveStudent")
+    public String saveStudent(@ModelAttribute("student") Student student) {
+        // Your service call to save the data to the database
+        studentService.saveStudent(student);
+        
+        // After saving, send them back to the main dashboard
+        return "redirect:/students/";
     }
     
     @Autowired
