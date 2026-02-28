@@ -26,34 +26,27 @@
         }
         .brand-orange { color: var(--orange-primary); }
 		
-       
         /* Styling for the flat nav links */
-.nav-link { 
-    color: #888 !important; 
-    font-size: 0.95rem;
-    padding: 1.2rem 1rem !important;
-    font-weight: 500;
-    
-    transition: 0.3s;
-}
+        .nav-link { 
+            color: #888 !important; 
+            font-size: 0.95rem;
+            padding: 1.2rem 1rem !important;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
-/* Ensure icons align with text */
-.nav-link i {
-    font-size: 1rem;
-    vertical-align: middle;
-}
+        .nav-link i {
+            font-size: 1rem;
+            vertical-align: middle;
+        }
 
-/* Orange underline for the active page */
-.nav-link.active { 
-    color: var(--orange-primary) !important; 
-    
-}
+        .nav-link.active { 
+            color: var(--orange-primary) !important; 
+        }
 
-
-
-.nav-link:hover { 
-    color: #fff !important; 
-}
+        .nav-link:hover { 
+            color: #fff !important; 
+        }
         
         /* Filter Row */
         .filter-container {
@@ -69,44 +62,56 @@
             height: 45px;
         }
 
-        /* Smaller Search Button */
         .btn-search {
             background-color: var(--orange-primary);
             color: #000;
             font-weight: 800;
             height: 45px;
-            width: 180px; /* Explicit width to make it smaller/compact */
+            width: 180px;
             border-radius: 6px;
             border: none;
             font-size: 0.85rem;
             transition: 0.3s;
         }
-        .btn-search:hover { background-color: #e67e00; 
-         color: #fff;
-    border-color: #444;}
+        .btn-search:hover { 
+            background-color: #e67e00; 
+            color: #fff;
+            border-color: #444;
+        }
     
         .btn-reset {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-   background-color: var(--orange-primary);
-    color: #000;
-    font-weight: 800;
-    height: 45px;
-    width: 80px; /* Slightly narrower than Search */
-    border-radius: 6px;
-    border: 1px solid #333;
-    font-size: 0.85rem;
-    text-decoration: none;
-    transition: 0.3s;
-    margin-left: 10px;
-    vertical-align: middle;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--orange-primary);
+            color: #000;
+            font-weight: 800;
+            height: 45px;
+            width: 80px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .btn-reset:hover {
+            background-color: #222;
+            color: #fff;
+            border-color: #444;
+        }
+        .static-edit-icon {
+    font-size: 1.3rem; /* Adjust size to match your table */
+    color: rgb(255, 128, 64);    /* Solid Black */
+    display: inline-block;
+    cursor: default;   /* Keeps the mouse arrow as a pointer */
 }
 
-.btn-reset:hover {
-    background-color: #222;
-    color: #fff;
-    border-color: #444;
+/* Optional: Make the icon slightly thicker to match your image */
+.static-edit-icon i::before {
+    -webkit-text-stroke: 0.5px #000000;
 }
 
         /* Table Card */
@@ -140,24 +145,22 @@
             </a>
             
             <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-2">
-    <li class="nav-item">
-        <a class="nav-link active" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}" th:href="@{/students/}">Dashboard</a>
-    </li>
-    <li class="nav-item">                    
-    <a class="nav-link active" th:href="@{/students/new}">
-        <i class="bi bi-person-plus me-1"></i> Add Student
-    </a>
-</li>
-    
-   
-    <li class="nav-item">
-        <a class="nav-link active" th:classappend="${currentPage == 'fee' ? 'active' : ''}" href="#">
-            <i class="bi bi-credit-card me-1"></i> Fee
-        </a>
-    </li>
-</ul>
-               
+                <ul class="navbar-nav ms-2">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}" th:href="@{/students/}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">                    
+                        <a class="nav-link" th:href="@{/students/new}">
+                            <i class="bi bi-person-plus me-1"></i> Add Student
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" th:classappend="${currentPage == 'fee' ? 'active' : ''}" href="#">
+                            <i class="bi bi-credit-card me-1"></i> Fee
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -166,50 +169,46 @@
         <div class="filter-container mb-4 shadow-sm">
             <form th:action="@{/students/filter}" method="get" class="row g-2 align-items-center">
                 <div class="col-md-3">
-                    
-                    
-                    <input type="text" name="name" th:value="${savedName}" placeholder="Search Name" class="form-control">
+                    <input type="text" name="name" th:value="${savedName}" placeholder="Search Name" class="form-control filter-box">
                 </div>
                 <div class="col-md-2">
-                <select name="standard" class="form-select">
-   				 <option value="">Class</option>
-    			 <option value="LKG" th:selected="${savedStandard == 'LKG'}">LKG</option>
-   				 <option value="UKG" th:selected="${savedStandard == 'UKG'}">UKG</option>
-  				 <option value="I" th:selected="${savedStandard == 'I'}">I</option>
-  				 <option value="II" th:selected="${savedStandard == 'II'}">II</option>
-  				 <option value="III" th:selected="${savedStandard == 'III'}">III</option>
-  				 <option value="IV" th:selected="${savedStandard == 'IV'}">IV</option>
-  				 <option value="V" th:selected="${savedStandard == 'V'}">V</option>
-  				 <option value="VI" th:selected="${savedStandard == 'VI'}">VI</option>
-  				 <option value="VII" th:selected="${savedStandard == 'VII'}">VII</option>
-  				 <option value="VIII" th:selected="${savedStandard == 'VIII'}">VIII</option>
-  				 <option value="IX" th:selected="${savedStandard == 'IX'}">IX</option>
-  				 <option value="X" th:selected="${savedStandard == 'X'}">X</option>
-  				 <option value="XI" th:selected="${savedStandard == 'XI'}">XI</option>
-  				 <option value="XII" th:selected="${savedStandard == 'XII'}">XXI</option>
-  				 <option value="Other" th:selected="${savedStandard == 'Other'}">Other</option>
-				 </select>
-                   
+                    <select name="standard" class="form-select filter-box">
+                        <option value="">Class</option>
+                        <option value="LKG" th:selected="${savedStandard == 'LKG'}">LKG</option>
+                        <option value="UKG" th:selected="${savedStandard == 'UKG'}">UKG</option>
+                        <option value="I" th:selected="${savedStandard == 'I'}">I</option>
+                        <option value="II" th:selected="${savedStandard == 'II'}">II</option>
+                        <option value="III" th:selected="${savedStandard == 'III'}">III</option>
+                        <option value="IV" th:selected="${savedStandard == 'IV'}">IV</option>
+                        <option value="V" th:selected="${savedStandard == 'V'}">V</option>
+                        <option value="VI" th:selected="${savedStandard == 'VI'}">VI</option>
+                        <option value="VII" th:selected="${savedStandard == 'VII'}">VII</option>
+                        <option value="VIII" th:selected="${savedStandard == 'VIII'}">VIII</option>
+                        <option value="IX" th:selected="${savedStandard == 'IX'}">IX</option>
+                        <option value="X" th:selected="${savedStandard == 'X'}">X</option>
+                        <option value="XI" th:selected="${savedStandard == 'XI'}">XI</option>
+                        <option value="XII" th:selected="${savedStandard == 'XII'}">XII</option>
+                        <option value="Other" th:selected="${savedStandard == 'Other'}">Other</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="gender" class="form-select">
+                    <select name="gender" class="form-select filter-box">
                         <option value="">Gender</option>
-                       <option value="Male" th:selected="${savedGender == 'Male'}">Male</option>
+                        <option value="Male" th:selected="${savedGender == 'Male'}">Male</option>
                         <option value="Female" th:selected="${savedGender == 'Female'}">Female</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="active" class="form-select">
-    					<option value="">Status</option>
-    					<option value="true" th:selected="${savedActive == true}">Active</option>
-  						  <option value="false" th:selected="${savedActive == false}">Inactive</option>
-					</select>
+                    <select name="active" class="form-select filter-box">
+                        <option value="">Status</option>
+                        <option value="true" th:selected="${savedActive == true}">Active</option>
+                        <option value="false" th:selected="${savedActive == false}">Inactive</option>
+                    </select>
                 </div>
                 <div class="col-md-3 text-end">
                     <button type="submit" class="btn-search">SEARCH</button>
-               <a th:href="@{/students/}" class="btn-reset">RESET</a>
-				</div>
-               
+                    <a th:href="@{/students/}" class="btn-reset">RESET</a>
+                </div>
             </form>
         </div>
 
@@ -231,7 +230,7 @@
                         <th>Gender</th>
                         <th>Contact</th>
                         <th>Status</th>
-                    </tr>
+                        <th>Action</th> </tr>
                 </thead>
                 <tbody>
                     <tr th:each="student : ${listStudents}">
@@ -241,10 +240,14 @@
                         <td th:text="${student.standard}"></td>
                         <td th:text="${student.gender}"></td>
                         <td th:text="${student.contactNumber}"></td>
-                        <td>
-                             <span th:text="${student.active ? 'Active' : 'Inactive'}" 
-                                   th:style="${student.active ? 'color: #2ecc71' : 'color: #e74c3c'}"></span>
-                        </td>
+                       <td>
+            <span th:text="${student.active ? 'Active' : 'Inactive'}" 
+                  th:style="${student.active ? 'color: #2ecc71' : 'color: #e74c3c'}"></span>
+        </td> <td class="text-center">
+            <a th:href="@{/students/edit/{id}(id=${student.id})}" class="static-edit-icon">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+        </td>
                     </tr>
                 </tbody>
             </table>

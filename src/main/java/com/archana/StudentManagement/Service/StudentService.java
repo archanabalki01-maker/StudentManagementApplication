@@ -33,7 +33,18 @@ public class StudentService{
             throw new RuntimeException("Student not found with id: " + id);
         }
     }
- 
+    
+    //update 
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Student not found for id :: " + id));
+    }
+
+    /**
+     * Logic for saving or updating a student.
+     * Spring Data JPA handles the update automatically if the 'id' field is present.
+     */
+   
     //search -> dasboard
     public List<Student> getFilteredStudents(String name, String standard, String gender, Boolean active) {
         // We use a Specification here because it's the only way to make 

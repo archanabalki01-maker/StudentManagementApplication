@@ -7,9 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.archana.StudentManagement.Entity.Student;
 import com.archana.StudentManagement.Service.StudentExportService;
 import com.archana.StudentManagement.Service.StudentService;
@@ -70,6 +73,24 @@ public class WebController {
         // After saving, send them back to the main dashboard
         return "redirect:/students/";
     }
+    
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        // 1. Get student from service
+        Student student = studentService.getStudentById(id);
+        
+        // 2. Add student object to model (This "populates" the form)
+        model.addAttribute("student", student);
+        
+        // 3. Set currentPage for the active nav tab
+        model.addAttribute("currentPage", "update"); 
+        
+        // 4. Return your new update student html file
+        return "update_student"; 
+    }
+   
+    
+    
     
     @Autowired
     private StudentExportService exportService;
